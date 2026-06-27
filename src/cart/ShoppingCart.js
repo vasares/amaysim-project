@@ -1,4 +1,4 @@
-const ProductCatalog = require('../product/ProductCatalog');
+const { ProductCatalog } = require('../product/ProductCatalog');
 
 class ShoppingCart {
   constructor(pricingRules) {
@@ -9,11 +9,6 @@ class ShoppingCart {
 
   add(item, promoCode) {
     const productCode = this.resolveProductCode(item);
-
-    if (!ProductCatalog[productCode]) {
-      throw new Error(`Unknown product code: ${productCode}`);
-    }
-
     this.productCodes.push(productCode);
 
     if (promoCode) {
@@ -38,15 +33,21 @@ class ShoppingCart {
   }
 
   resolveProductCode(item) {
+    let productCode;
+
     if (typeof item === 'string') {
-      return item;
+      productCode = item;
+    } else if (item && item.code) {
+      productCode = item.code;
+    } else {
+      throw new Error('Item must be a product code or product object.');
     }
 
-    if (item && item.code) {
-      return item.code;
+    if (!ProductCatalog[productCode]) {
+      throw new Error(`Unknown product code: ${productCode}`);
     }
 
-    throw new Error('Item must be a product code or product object.');
+    return productCode;
   }
 }
 

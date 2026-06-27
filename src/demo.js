@@ -1,4 +1,5 @@
 const { ShoppingCart, ProductCatalog, defaultPricingRules } = require('./index');
+const { formatCurrency, formatItems } = require('./common/utils');
 
 const scenarios = [
   {
@@ -34,19 +35,4 @@ for (const scenario of scenarios) {
   console.log(`${scenario.name}: ${formatCurrency(cart.total)}`);
   console.log(formatItems(cart.items));
   console.log('');
-}
-
-function formatCurrency(amount) {
-  return `$${amount.toFixed(2)}`;
-}
-
-function formatItems(items) {
-  const counts = items.reduce((result, item) => {
-    result[item.name] = (result[item.name] || 0) + 1;
-    return result;
-  }, {});
-
-  return Object.entries(counts)
-    .map(([name, quantity]) => `${quantity} x ${name}`)
-    .join(', ');
 }

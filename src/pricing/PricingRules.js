@@ -8,7 +8,7 @@ class PricingRules {
   }
 
   calculateTotal(productCodes, promoCodes, catalog) {
-    const quantities = countProductCodes(productCodes);
+    const quantities = this.countProductCodes(productCodes);
     let totalInCents = 0;
 
     for (const [productCode, quantity] of Object.entries(quantities)) {
@@ -42,13 +42,13 @@ class PricingRules {
   supportsPromoCode(promoCode) {
     return this.promoRules.some((promoRule) => promoRule.code === promoCode);
   }
-}
 
-function countProductCodes(productCodes) {
-  return productCodes.reduce((counts, productCode) => {
-    counts[productCode] = (counts[productCode] || 0) + 1;
-    return counts;
-  }, {});
+  countProductCodes(productCodes) {
+    return productCodes.reduce((counts, productCode) => {
+      counts[productCode] = (counts[productCode] || 0) + 1;
+      return counts;
+    }, {});
+  }
 }
 
 module.exports = PricingRules;
