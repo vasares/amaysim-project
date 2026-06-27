@@ -1,0 +1,13 @@
+{
+  "name": "amaysim-shopping-cart",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/demo.js",
+    "test": "jest"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^30.0.0"
+  }
+}
